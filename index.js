@@ -39,3 +39,22 @@ app.get('/api/users', (req, res) => {
         res.json(result);
     })
 })
+
+app.post('/api/users', (req, res) => {
+    const { nama, nim, kelas } = req.body;
+
+    if (!nama || !nim || !kelas) {
+        return res.status(400).send('nama, nim, dan kelas harus diisi');
+    }
+
+    db.query
+    ('INSERT INTO mahasiswa (nama, nim, kelas) VALUES (?, ?, ?)',
+        [nama, nim, kelas],
+         (err, result) => {
+        if (err) {
+            console.err(err);
+            return res.status(500).json({message : 'Database error'});
+            }
+            res.json({message : 'User added successfully'});
+        });
+});

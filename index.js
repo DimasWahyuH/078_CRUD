@@ -28,3 +28,14 @@ db.connect((err) => {
   }
   console.log('Connected to MySQL Succesfully!') ;
 });
+
+app.get('/api/users', (req, res) => {
+    db.query('SELECT * FROM mahasiswa',(err,result) => {
+        if (err) {
+            console.error('Error executing query:0' + err.stack);
+            res.status(500).send('Error fetching users');
+            return;
+        }
+        res.json(result);
+    })
+})
